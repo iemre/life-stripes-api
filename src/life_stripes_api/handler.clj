@@ -1,11 +1,15 @@
 (ns life-stripes-api.handler
-  (:require [compojure.core :refer :all]
+  (:use compojure.core)
+  (:require [compojure.handler :as handler]
+            [ring.middleware.json :as middleware]
             [compojure.route :as route]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
+            [life-stripes-api.stripe.stripe-controller :as stripes]))
 
 (defroutes app-routes
-           (GET "/" [] "HELLO WORLD")
-           (route/not-found "not found"))
+  (stripes/get-routes)
+  (route/not-found "Not Found"))
 
 (def app
-  (wrap-defaults app-routes site-defaults))
+  (-> (handler/api app-routes)
+      (middleware/wrap-json-body)
+      (middleware/wrap-json-response)))

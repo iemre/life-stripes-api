@@ -1,3 +1,3 @@
-(ns life-stripes-api.activity-repo)
+(ns life-stripes-api.activity.activity-repo)
 
 ;; functions to CRUD activities

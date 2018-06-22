@@ -8,7 +8,8 @@
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  [org.clojure/java.jdbc, "0.6.1"]
                  [migratus, "1.0.6"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring/ring-json "0.4.0"]
+                 [yesql "0.5.3"]]
 
   :plugins [[lein-ring "0.9.7"]
             [migratus-lein "0.5.7"]

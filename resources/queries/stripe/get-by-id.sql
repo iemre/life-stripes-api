@@ -1,0 +1,1 @@
+SELECT * FROM stripes WHERE id=:id;

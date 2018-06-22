@@ -1,0 +1,1 @@
+select * from stripes where user_id=:user_id;

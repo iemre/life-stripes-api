@@ -1,11 +1,16 @@
 (ns life-stripes-api.activity.activity-service
-  (:require [life-stripes-api.activity.activity-repo :as repo]))
+  (:require [life-stripes-api.activity.activity-repo :as repo]
+            [life-stripes-api.common.common-repo :as common-repo]
+            ))
 
 ;; functions to crud / do computations related to activities
 
 (defn get-by-user-id [user_id]
   (repo/get-by-user-id {:user_id (Integer/parseInt user_id)}))
 
+(defn get-by-stripe-id [stripe_id]
+  (repo/get-by-stripe-id {:stripe_id (Integer/parseInt stripe_id)}))
+
 (defn create-activity [{:keys [note user_id stripe_id start_date end_date]}]
-  (repo/insert {:note note :user_id user_id :stripe_id stripe_id :start_date start_date :end_date end_date}))
+  (repo/insert! (common-repo/enrich-with-created-at {:note note :user_id user_id :stripe_id stripe_id :start_date start_date :end_date end_date})))
 

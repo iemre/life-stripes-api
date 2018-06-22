@@ -9,7 +9,10 @@
                  [org.clojure/java.jdbc, "0.6.1"]
                  [migratus, "1.0.6"]
                  [ring/ring-json "0.4.0"]
-                 [yesql "0.5.3"]]
+                 [yesql "0.5.3"]
+                 [digest "1.4.8"]
+                 [metosin/ring-http-response "0.9.0"]
+                 ]
 
   :plugins [[lein-ring "0.9.7"]
             [migratus-lein "0.5.7"]

@@ -8,4 +8,4 @@
   ([] (context "/user" []
         (defroutes stripe-routes
           (GET "/:id/stripes" [id] (stripe-service/get-by-user-id id))
-                   (GET "/:id/activities" [id] (activity-service/get-by-user-id id))))))
+          (GET "/:id/activities" [id] (activity-service/get-by-user-id id))))))

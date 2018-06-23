@@ -1,7 +1,6 @@
 (ns life-stripes-api.stripe.stripe-service
   (:require [life-stripes-api.stripe.stripe-repo :as repo]
-            [life-stripes-api.common.common-repo :as common-repo]
-            ))
+            [life-stripes-api.common.common-repo :as common-repo]))
 
 ;; functions to crud / do computations related to stripes
 

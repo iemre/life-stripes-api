@@ -2,8 +2,6 @@
   (:require [life-stripes-api.activity.activity-repo :as repo]
             [life-stripes-api.common.common-repo :as common-repo]))
 
-;; functions to crud / do computations related to activities
-
 (defn get-by-user-id [user_id]
   (repo/get-by-user-id {:user_id (Integer/parseInt user_id)}))
 
@@ -17,3 +15,5 @@
                                                      :start_date start_date
                                                      :length_in_minutes length_in_minutes})))
 
+(defn update-activity [{:keys [id note start_date length_in_minutes]}]
+  (repo/update! {:id id :note note :start_date start_date :length_in_minutes length_in_minutes}))

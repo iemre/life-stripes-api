@@ -11,7 +11,14 @@
    :user_id (get (:body req) "user_id")
    :stripe_id (get (:body req) "stripe_id")})
 
+(defn activity-payload-for-update [id req]
+  {:note (get (:body req) "note")
+   :start_date  (parse-iso8601-as-timestamp (get (:body req) "start_date"))
+   :length_in_minutes (get (:body req) "length_in_minutes")
+   :id (Integer/parseInt id)})
+
 (defn get-routes
   ([] (context "/activity" [] (defroutes activity-routes
-                                (POST "/" req (service/create-activity (activity-payload-from-req req)) {:status (http_status :created)})))))
+                                (POST "/" req (service/create-activity (activity-payload-from-req req)) {:status (http_status :created)})
+                                (PUT "/:id" [id :as req] (service/update-activity (activity-payload-for-update id req)) {:status (http_status :ok)})))))
 

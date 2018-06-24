@@ -8,5 +8,5 @@ select * from activities
 where stripe_id=:stripe_id
 
 -- name: insert!
-insert into activities (note, start_date, end_date, stripe_id, user_id, created_at)
- values (:note, :start_date, :end_date, :stripe_id, :user_id, :created_at);
+insert into activities (note, start_date, length_in_minutes, stripe_id, user_id, created_at)
+ values (:note, :start_date, :length_in_minutes, :stripe_id, :user_id, :created_at);

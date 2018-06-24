@@ -5,12 +5,14 @@
             [compojure.route :as route]
             [life-stripes-api.stripe.stripe-controller :as stripes]
             [life-stripes-api.user.user-controller :as users]
+            [life-stripes-api.activity.activity-controller :as activities]
             [ring.adapter.jetty :refer [run-jetty]])
   (:gen-class))
 
 (defroutes app-routes
   (stripes/get-routes)
   (users/get-routes)
+  (activities/get-routes)
   (route/not-found "Not Found"))
 
 (def app

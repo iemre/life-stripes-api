@@ -1,7 +1,7 @@
 (ns life-stripes-api.user.user-service
   (:require [life-stripes-api.user.user-repo :as repo]
-            [life-stripes-api.common.common-repo :as common])
-  (require digest))
+            [life-stripes-api.common.common-repo :as common]
+            [digest :as digest]))
 
 (defn pwhash [password]
   (digest/sha-512 password))
@@ -15,7 +15,8 @@
 
 (defn create-user [{:keys [email password]}]
   (repo/insert! (common/enrich-with-created-at
-                 {:email email :password_hash (pwhash password)
+                 {:email email
+                  :password_hash (pwhash password)
                   :registration_key (random-registration-key)})))
 
 (defn activate-user [registration_key]

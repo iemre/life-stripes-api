@@ -10,6 +10,10 @@
 (defn get-by-stripe-id [stripe_id]
   (repo/get-by-stripe-id {:stripe_id (Integer/parseInt stripe_id)}))
 
-(defn create-activity [{:keys [note user_id stripe_id start_date end_date]}]
-  (repo/insert! (common-repo/enrich-with-created-at {:note note :user_id user_id :stripe_id stripe_id :start_date start_date :end_date end_date})))
+(defn create-activity [{:keys [note user_id stripe_id start_date length_in_minutes]}]
+  (repo/insert! (common-repo/enrich-with-created-at {:note note
+                                                     :user_id user_id
+                                                     :stripe_id stripe_id
+                                                     :start_date start_date
+                                                     :length_in_minutes length_in_minutes})))
 

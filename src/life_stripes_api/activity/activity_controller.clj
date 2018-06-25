@@ -2,6 +2,7 @@
   (:use compojure.core)
   (:require [life-stripes-api.activity.activity-service :as service]
             [life-stripes-api.common.common-controller :refer [http_status]]
+            [compojure.coercions :refer [as-int]]
             [life-stripes-api.common.date-utils :refer [parse-iso8601-as-timestamp]]))
 
 (defn activity-payload-for-update [id req]
@@ -12,5 +13,6 @@
 
 (defn get-routes
   ([] (context "/activity" [] (defroutes activity-routes
-                                (PUT "/:id" [id :as req] (service/update-activity (activity-payload-for-update id req)) {:status (http_status :ok)})))))
+                                (PUT "/:id" [id :as req] (service/update-activity (activity-payload-for-update id req)) {:status (http_status :ok)})
+                                (DELETE "/:id" [id :<< as-int] (service/archive-activity id) {:status (http_status :ok)})))))
 

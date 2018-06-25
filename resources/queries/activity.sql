@@ -17,3 +17,8 @@ note = coalesce(:note, note),
 start_date = coalesce(:start_date, start_date),
 length_in_minutes = coalesce(:length_in_minutes, length_in_minutes)
 where id=:id;
+
+-- name: archive!
+update activities set
+archived=true
+where id=:id;

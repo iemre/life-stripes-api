@@ -10,3 +10,6 @@
 
 (defn update-stripe [{:keys [title relative_priority colour_code id]}]
   (repo/update! {:title title :relative_priority relative_priority :colour_code colour_code :id id}))
+
+(defn archive-stripe [id]
+  (repo/archive! {:id id}))

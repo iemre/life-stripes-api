@@ -17,3 +17,6 @@
 
 (defn update-activity [{:keys [id note start_date length_in_minutes]}]
   (repo/update! {:id id :note note :start_date start_date :length_in_minutes length_in_minutes}))
+
+(defn archive-activity [id]
+  (repo/archive! {:id id}))

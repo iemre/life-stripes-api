@@ -14,3 +14,8 @@ title = coalesce(:title, title),
 relative_priority = coalesce(:relative_priority, relative_priority),
 colour_code = coalesce(:colour_code, colour_code)
 where id=:id;
+
+-- name: archive!
+update stripes set
+archived=true
+where id=:id;

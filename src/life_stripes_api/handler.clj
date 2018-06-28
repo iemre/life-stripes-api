@@ -6,6 +6,7 @@
             [life-stripes-api.stripe.stripe-controller :as stripes]
             [life-stripes-api.user.user-controller :as users]
             [life-stripes-api.activity.activity-controller :as activities]
+            [life-stripes-api.authn.authn-controller :as authn]
             [ring.adapter.jetty :refer [run-jetty]])
   (:gen-class))
 
@@ -13,6 +14,7 @@
   (stripes/get-routes)
   (users/get-routes)
   (activities/get-routes)
+  (authn/get-routes)
   (route/not-found "Not Found"))
 
 (def app

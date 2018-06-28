@@ -11,6 +11,14 @@
                                                             :user_id (:id user)
                                                             :duration_in_minutes 360})))
 
+(defn authorised-for-resource [{:keys [token resource resource_id]}]
+  (case resource
+    "stripes" (not (empty? (repo/stripes-by-token-and-resource-id {:token token :resource resource :resource_id resource_id})))
+    "activities" (not (empty? (repo/activities-by-token-and-resource-id {:token token :resource resource :resource_id resource_id})))))
+
+(defn token-has-access-to-user [{:keys [token user_id]}]
+  (not (empty? (repo/tokens-by-token-and-user-id {:token token :user_id user_id}))))
+
 (defn authenticate [{:keys [email password]}]
   (let [user (user-service/get-user-by-email-and-password email password)]
     (if (empty? user)

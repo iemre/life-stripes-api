@@ -1,7 +1,8 @@
 (ns life-stripes-api.handler
   (:use compojure.core)
   (:require [compojure.handler :as handler]
-            [ring.middleware.json :as middleware]
+            [ring.middleware.json :as json-middleware]
+            [ring.middleware.cookies :as cookies-middleware]
             [compojure.route :as route]
             [life-stripes-api.stripe.stripe-controller :as stripes]
             [life-stripes-api.user.user-controller :as users]
@@ -19,8 +20,9 @@
 
 (def app
   (-> (handler/api app-routes)
-      (middleware/wrap-json-body)
-      (middleware/wrap-json-response)))
+      (cookies-middleware/wrap-cookies)
+      (json-middleware/wrap-json-body)
+      (json-middleware/wrap-json-response)))
 
 (defn -main [& args]
   (run-jetty app {:port (Integer/valueOf (or (System/getenv "port") "3000"))}))

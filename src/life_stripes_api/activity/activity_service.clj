@@ -1,9 +1,14 @@
 (ns life-stripes-api.activity.activity-service
   (:require [life-stripes-api.activity.activity-repo :as repo]
+            [life-stripes-api.common.date-utils :refer [add-hours-to-timestamp]]
             [life-stripes-api.common.common-repo :as common-repo]))
 
 (defn get-by-user-id [user_id]
   (repo/get-by-user-id {:user_id (Integer/parseInt user_id)}))
+
+(defn query-activities [{:keys [user_id start_date length_in_hours]}]
+  (repo/query-activities {:user_id user_id :start_date start_date
+                          :end_date (add-hours-to-timestamp start_date length_in_hours)}))
 
 (defn get-by-stripe-id [stripe_id]
   (repo/get-by-stripe-id {:stripe_id (Integer/parseInt stripe_id)}))

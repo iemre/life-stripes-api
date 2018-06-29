@@ -4,6 +4,7 @@
             [life-stripes-api.activity.activity-service :as activity-service]
             [life-stripes-api.user.user-service :as user-service]
             [life-stripes-api.common.common-controller :refer [http_status]]
+            [compojure.coercions :refer [as-int]]
             [life-stripes-api.common.common-controller :refer [call-if-token-has-access-to-user]]
             [life-stripes-api.common.date-utils :refer [parse-iso8601-as-timestamp]]))
 
@@ -24,6 +25,11 @@
    :colour_code (get (:body req) "colour_code")
    :user_id (Integer/parseInt user_id)})
 
+(defn query-body [user_id start_date length_in_hours]
+  {:user_id (Integer/parseInt user_id)
+   :start_date (parse-iso8601-as-timestamp start_date)
+   :length_in_hours (Integer/parseInt length_in_hours)})
+
 (defn get-routes
   ([] (context "/user" []
         (defroutes stripe-routes
@@ -33,4 +39,6 @@
                                   (user-service/activate-user key)) "")
           (POST "/:id/activities" [id :as req] (call-if-token-has-access-to-user id req #(activity-service/create-activity (activity-payload-from id req)) (http_status :created)))
           (POST "/:id/stripes" [id :as req] (call-if-token-has-access-to-user id req #(stripe-service/create-stripe (stripe-payload-from id req)) (http_status :created)))
-          (GET "/:id/activities" [id :as req] (call-if-token-has-access-to-user id req #(activity-service/get-by-user-id id) (http_status :ok)))))))
+          (GET "/:id/activities" [id start_date length_in_hours :as req] (call-if-token-has-access-to-user id req #(if (empty? start_date)
+                                                                                                                     (activity-service/get-by-user-id id)
+                                                                                                                     (activity-service/query-activities (query-body id start_date length_in_hours))) (http_status :ok)))))))

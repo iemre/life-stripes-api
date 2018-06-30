@@ -11,9 +11,7 @@
   (let [auth-result (service/authenticate (authn-payload-from req))]
     (if (empty? auth-result)
       {:status (http_status :unauthorized) :body {}}
-      {:status (http_status :created) :body auth-result :cookies {"lifestripes-token" (:token (first auth-result))}}))
-    )
-
+      {:status (http_status :created) :body auth-result :cookies {"lifestripes-token" (:token (first auth-result))}})))
 
 (defn get-routes
   ([] (context "/authn" [] (defroutes activity-routes
